@@ -17,3 +17,4 @@ supabase==2.5.3
 
 # ── BUILT-IN (no install needed) ──
 # dataclasses, uuid, datetime, json, os, base64, re
+gunicorn==23.0.0 
