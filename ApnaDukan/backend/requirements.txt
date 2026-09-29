@@ -1,0 +1,19 @@
+# requirements.txt
+# Install everything with: pip install -r requirements.txt
+
+# ── WEB FRAMEWORK ──
+flask==3.0.3
+flask-cors==4.0.1
+
+# ── ENVIRONMENT VARIABLES ──
+python-dotenv==1.0.1
+
+# ── HTTP REQUESTS ──
+# Used to call Gemini API, Vercel API, and remove.bg
+requests==2.32.3
+
+# ── DATABASE ──
+supabase==2.5.3
+
+# ── BUILT-IN (no install needed) ──
+# dataclasses, uuid, datetime, json, os, base64, re

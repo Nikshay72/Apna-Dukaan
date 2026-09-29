@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{SEO_TAGS}}
+
+    <!-- Fonts — exactly as designed in Figma -->
+    <link href="https://fonts.googleapis.com/css2?family=Luxurious+Script&family=MonteCarlo&family=Italiana&family=Headland+One&family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <style>
+        :root {
+            --red:    #923A3A;
+            --red-dk: #6e2b2b;
+            --beige:  #CAC3B1;
+            --beige-lt: #E8E3D8;
+            --white:  #FFFFFF;
+            --text:   #1A1A1A;
+            --muted:  #666;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--beige); color: var(--text); font-family: 'Inria Serif', serif; min-height: 100vh; }
+
+        /* HERO */
+        .hero {
+            margin: 10px 10px 0;
+            background: var(--red);
+            border-radius: 30px 30px 0 0;
+            padding: 36px 20px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-timings {
+            position: absolute; top: 16px; right: 18px;
+            font-family: 'Inria Serif', serif; font-size: 11px;
+            color: rgba(255,255,255,0.75); line-height: 1.5; text-align: right;
+        }
+        .hero-welcome {
+            font-family: 'Luxurious Script', cursive;
+            font-size: 58px; color: var(--white);
+            line-height: 1; margin-bottom: 4px;
+            text-shadow: 0 6px 6px rgba(0,0,0,0.25);
+        }
+        .hero-shopname {
+            font-family: 'MonteCarlo', cursive;
+            font-size: 42px; color: var(--white);
+            line-height: 1.1; text-shadow: 0 6px 4px rgba(0,0,0,0.25);
+        }
+
+        /* PILL NAV */
+        .pill-nav {
+            margin: 0 10px; background: var(--beige);
+            display: flex; gap: 10px; padding: 10px 12px;
+            overflow-x: auto; scrollbar-width: none;
+        }
+        .pill-nav::-webkit-scrollbar { display: none; }
+        .pill {
+            flex-shrink: 0; background: var(--white);
+            border-radius: 90px; padding: 7px 18px;
+            font-family: 'Headland One', serif; font-size: 12px;
+            color: var(--red); text-decoration: none;
+            white-space: nowrap; border: none; cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .pill:active { opacity: 0.7; }
+
+        /* SECTIONS */
+        .section { margin: 0 10px; padding: 22px 0 8px; }
+        .section-title {
+            font-family: 'Italiana', serif; font-size: 32px;
+            color: var(--red); margin-bottom: 14px;
+        }
+
+        /* PRODUCTS — horizontal scroll */
+        .products-scroll-wrap {
+            margin: 0 -10px; padding: 4px 10px 10px;
+            overflow-x: auto; scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .products-scroll-wrap::-webkit-scrollbar { display: none; }
+        #apd-products-grid { display: flex; gap: 12px; width: max-content; min-width: 100%; }
+
+        /* Override apd card styles for this theme */
+        .apd-product-card {
+            width: 125px !important; border-radius: 20px !important;
+            background: var(--red) !important;
+            border: none !important; box-shadow: none !important;
+            flex-shrink: 0;
+        }
+        .apd-product-card:hover { transform: translateY(-3px) !important; box-shadow: 0 6px 16px rgba(146,58,58,0.35) !important; }
+        .apd-card-img-wrap {
+            width: 125px !important; height: 151px !important;
+            padding-top: 0 !important; background: var(--red) !important;
+            display: flex !important; flex-direction: column !important;
+            align-items: center !important; justify-content: center !important;
+            gap: 8px !important; position: relative;
+        }
+        .apd-card-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; padding: 0 !important; border-radius: 20px 20px 0 0; }
+        .apd-card-name {
+            font-family: 'Italiana', serif !important; font-size: 14px !important;
+            color: var(--beige) !important; padding: 7px 8px 10px !important;
+            background: var(--red) !important; font-weight: 400 !important;
+        }
+        .apd-placeholder-inner { color: var(--beige) !important; }
+        .apd-enhanced-badge {
+            background: rgba(255,255,255,0.18) !important;
+            border: 1px solid rgba(255,255,255,0.35) !important;
+            font-family: 'Inria Serif', serif !important; font-size: 9px !important;
+        }
+        .apd-card-btn { color: var(--red) !important; }
+
+        /* Camera placeholder in empty card */
+        .cam-placeholder {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 8px; height: 100%;
+        }
+        .cam-svg { opacity: 0.6; }
+        .cam-text { font-family: 'Italiana', serif; font-size: 14px; color: var(--beige); }
+
+        /* Add button */
+        #add-product-btn {
+            width: 100%; margin-top: 10px; padding: 11px;
+            border: 1.5px dashed rgba(146,58,58,0.45);
+            border-radius: 12px; background: transparent;
+            font-family: 'Headland One', serif; font-size: 13px;
+            color: var(--red); cursor: pointer; letter-spacing: 0.3px;
+            transition: background 0.15s;
+        }
+        #add-product-btn:hover { background: rgba(146,58,58,0.06); }
+
+        /* SERVICES CARD */
+        .services-card {
+            background: var(--red); border-radius: 30px; overflow: hidden;
+        }
+        .service-row {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(202,195,177,0.2);
+        }
+        .service-row:last-child { border-bottom: none; }
+        .service-label {
+            font-family: 'Inria Serif', serif; font-size: 11px;
+            color: rgba(202,195,177,0.7); text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 3px;
+        }
+        .service-value {
+            font-family: 'Italiana', serif; font-size: 20px; color: var(--white);
+        }
+
+        /* MAP */
+        .map-wrap { border-radius: 30px; overflow: hidden; height: 240px; }
+        .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+        .map-placeholder {
+            width: 100%; height: 100%; background: #d8d1c4;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Italiana', serif; font-size: 18px; color: var(--red);
+        }
+
+        /* CTA */
+        .cta-section { padding: 8px 10px 20px; display: flex; flex-direction: column; gap: 10px; }
+        .btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px; border-radius: 14px;
+            text-decoration: none; font-family: 'Headland One', serif;
+            font-size: 14px; letter-spacing: 0.5px; border: none;
+            cursor: pointer; transition: opacity 0.15s;
+        }
+        .btn:active { opacity: 0.88; transform: scale(0.98); }
+        .btn-call { background: var(--red); color: var(--white); }
+        .btn-wa   { background: #25D366; color: var(--white); }
+
+        /* FOOTER */
+        footer {
+            margin: 4px 10px 10px; padding: 18px 16px;
+            text-align: center; border-top: 1px solid rgba(146,58,58,0.18);
+        }
+        .footer-social { font-family: 'Italiana', serif; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+        .footer-contact { font-family: 'Italiana', serif; font-size: 13px; color: var(--text); margin-bottom: 8px; }
+        .footer-copy { font-family: 'Inria Serif', serif; font-size: 13px; color: var(--red); }
+
+        /* MODALS */
+        .apd-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999; backdrop-filter: blur(3px);
+        }
+        .apd-modal {
+            background: var(--white); border-radius: 20px;
+            padding: 26px 22px 20px; width: min(320px, 90vw); text-align: center;
+        }
+        .apd-modal-title { font-family: 'Italiana', serif; font-size: 26px; color: var(--red); margin-bottom: 8px; }
+        .apd-modal-sub { font-family: 'Inria Serif', serif; font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+        .apd-modal-input {
+            width: 100%; padding: 10px 14px;
+            border: 1px solid rgba(146,58,58,0.3); border-radius: 10px;
+            font-family: 'Inria Serif', serif; font-size: 14px;
+            color: var(--text); outline: none; margin-bottom: 14px;
+        }
+        .apd-modal-input:focus { border-color: var(--red); }
+        .apd-modal-actions { display: flex; gap: 10px; }
+        .apd-btn-primary, .apd-btn-secondary {
+            flex: 1; padding: 11px; border-radius: 10px; border: none;
+            font-family: 'Headland One', serif; font-size: 12px;
+            letter-spacing: 0.4px; cursor: pointer;
+        }
+        .apd-btn-primary  { background: var(--red); color: white; }
+        .apd-btn-secondary { background: #f0ece6; color: var(--text); }
+
+        /* TOAST */
+        .apd-toast {
+            position: fixed; bottom: 24px; left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: var(--red-dk); color: white;
+            padding: 9px 20px; border-radius: 30px;
+            font-family: 'Inria Serif', serif; font-size: 13px;
+            opacity: 0; transition: all 0.25s; z-index: 1000; white-space: nowrap;
+        }
+        .apd-toast.apd-toast-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* SPINNER */
+        .apd-spinner {
+            width: 22px; height: 22px;
+            border: 2px solid rgba(202,195,177,0.35);
+            border-top-color: var(--beige);
+            border-radius: 50%; animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-timings">
+            Shop Timings<br>{{OPENING_TIME}} – {{CLOSING_TIME}}
+        </div>
+        <div class="hero-welcome">Welcome</div>
+        <div class="hero-shopname">{{SHOP_NAME}}</div>
+    </div>
+
+    <!-- PILL NAV -->
+    <div class="pill-nav">
+        <a href="#products" class="pill">+View Products</a>
+        <a href="#services" class="pill">+Our Timing</a>
+        <a href="#contact" class="pill">+Contact Us</a>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="section" id="products">
+        <div class="section-title">Our Products</div>
+        <div class="products-scroll-wrap">
+            <div id="apd-products-grid">
+                {{PRODUCTS_HTML}}
+            </div>
+        </div>
+        <button id="add-product-btn">+ Add Photo</button>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="section" id="services">
+        <div class="section-title">Our Services</div>
+        <div class="services-card">
+            <div class="service-row">
+                <div class="service-label">Shop Name</div>
+                <div class="service-value">{{SHOP_NAME}}</div>
+            </div>
+            <div class="service-row">
+                <div class="service-label">Location</div>
+                <div class="service-value">{{LOCATION}}</div>
+            </div>
+            <div class="service-row">
+                <div class="service-label">Open Days</div>
+                <div class="service-value">{{OPEN_DAYS}}</div>
+            </div>
+            <div class="service-row">
+                <div class="service-label">Opening Time</div>
+                <div class="service-value">{{OPENING_TIME}}</div>
+            </div>
+            <div class="service-row">
+                <div class="service-label">Closing Time</div>
+                <div class="service-value">{{CLOSING_TIME}}</div>
+            </div>
+            <div class="service-row">
+                <div class="service-label">Contact</div>
+                <div class="service-value">{{PHONE}}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOCATION -->
+    <div class="section" id="location">
+        <div class="section-title">Our Location</div>
+        <div class="map-wrap">
+            {{MAP_EMBED}}
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section" id="contact">
+        <a href="tel:{{PHONE}}" class="btn btn-call">Call Now</a>
+        <a href="https://wa.me/{{WHATSAPP_NUMBER}}?text=Namaste!%20{{SHOP_NAME}}%20ke%20baare%20mein%20jaanna%20chahta%20hoon." class="btn btn-wa">WhatsApp</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-social">Do Follow us on @ApnaDukaan</div>
+        <div class="footer-contact">{{PHONE}}</div>
+        <div class="footer-copy">© Apna Dukaan.com</div>
+    </footer>
+
+    <script src="/js/products.js"></script>
+</body>
+</html>

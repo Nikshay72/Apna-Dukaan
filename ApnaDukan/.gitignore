@@ -1,0 +1,39 @@
+# .gitignore
+# These files will NOT be uploaded to GitHub — they contain secrets!
+
+# Secret keys
+backend/.env
+.env
+
+# Python cache files (auto-generated, not needed)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.pyc
+
+# Virtual environment folder (if you create one)
+venv/
+env/
+.venv/
+
+# macOS junk
+.DS_Store
+
+# Windows junk
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
+
+# Node modules (if any)
+node_modules/
+
+# Local fallback database (used when Supabase is not configured)
+backend/local_shops.db
+local_shops.db
